@@ -4,7 +4,7 @@
     <description>Implement support for Parse.com push notifications</description>
     <license>Apache 2.0</license>
     <keywords>cordova,parse,push,notifications</keywords>
-    <js-module src="js/parsepush.js" name="parsepush">
+    <js-module src="js/www/parsepush.js" name="parsepush">
         <clobbers target="notifications.parsepush" />
     </js-module>
     <platform name="ios">
