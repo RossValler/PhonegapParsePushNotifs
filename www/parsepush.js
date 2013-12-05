@@ -1,4 +1,4 @@
-cordova.define("ca.valler.phonegap.ParsePushNotifications", function(require, exports, module) {
+cordova.define("ca.valler.phonegap.ParsePushNotifications.parsepush", function(require, exports, module) {
 	/*
 	 *
 	 * Licensed to the Apache Software Foundation (ASF) under one
