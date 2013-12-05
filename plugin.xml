@@ -13,7 +13,7 @@
                 <param name="ios-package" value="CDVParsePushNotifications"/>
             </feature>
         </config-file>
-        <header-file src="ios/CDVParsePushNotifications.h" />
-        <source-file src="ios/CDVParsePushNotifications.m" />
+        <header-file src="src/ios/CDVParsePushNotifications.h" />
+        <source-file src="src/ios/CDVParsePushNotifications.m" />
     </platform>
 </plugin>
