@@ -4,7 +4,7 @@
            id="org.apache.cordova.splashscreen"
       version="0.2.4">
     <name>Parse Push Notifications</name>
-    <description>Implement support for Parse\.com push notifications</description>
+    <description>Implement support for Parsecom push notifications</description>
     <license>Apache 2.0</license>
     <keywords>cordova,parse,push,notifications</keywords>
     <repo>https://github.com/RossValler/PhonegapParsePushNotifs.git</repo>
