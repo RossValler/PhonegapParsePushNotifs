@@ -35,6 +35,8 @@ module.exports = {
 		 */
 		count: function(successCallback){
 
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
+
 			exec(successCallback, null, "ParsePushNotifications", "getNumberOfNotifications", []);
 		},
 
@@ -44,6 +46,8 @@ module.exports = {
 		 * @param  {Callback}  successCallback
 		 */
 		clear: function(successCallback){
+
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
 
 			exec(successCallback, null, "ParsePushNotifications", "clearNotifications", []);
 		},
@@ -55,6 +59,8 @@ module.exports = {
 		 * @param  {Number}    amount           Number of notifications to subtract
 		 */
 		deduct: function(successCallback, deductAmount){
+
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
 
 			exec(successCallback, null, "ParsePushNotifications", "deductFromActiveNotificationsBadge", [deductAmount]);
 		}
@@ -73,6 +79,8 @@ module.exports = {
 		 */
 		subscribe: function(successCallback, channelName){
 
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
+
 			exec(successCallback, null, "ParsePushNotifications", "subscribeToChannel", [channelName]);
 		},
 
@@ -84,6 +92,8 @@ module.exports = {
 		 */
 		unsubscribe: function(successCallback, channelName){
 
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
+
 			exec(successCallback, null, "ParsePushNotifications", "unsubscribeFromChannel", [channelName]);
 		},
 
@@ -93,6 +103,8 @@ module.exports = {
 		 * @param  {Callback}  successCallback
 		 */
 		list: function(successCallback){
+
+			var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
 
 			exec(successCallback, null, "ParsePushNotifications", "getSubscribedChannels", []);
 		}
@@ -104,6 +116,8 @@ module.exports = {
 	 * @param  {Callback}  successCallback
 	 */
 	launchData: function(successCallback){
+
+		var successCallback = (typeof successCallback === 'function') ? successCallback : function(){};
 
 		exec(successCallback, null, "ParsePushNotifications", "getLaunchNotificationData", []);
 	}
