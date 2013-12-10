@@ -33,6 +33,8 @@
 	[self.commandDelegate runInBackground:^{
 
 		PFInstallation *parseInstallation = [PFInstallation currentInstallation];
+        
+        NSLog(@"[ParsePush] Getting number of notifications: %ld", (long)parseInstallation.badge);
 
 		//-----------------------------------------
 		// Return badge number
@@ -50,6 +52,8 @@
 - (void)clearNotifications:(CDVInvokedUrlCommand*)command{
 
 	[self.commandDelegate runInBackground:^{
+        
+        NSLog(@"[ParsePush] Clearing notifications badge");
 
 		//-----------------------------------------
 		// Set badge to 0
@@ -78,14 +82,24 @@
 
 	[self.commandDelegate runInBackground:^{
         
-		AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        NSLog(@"[ParsePush] Getting launch notification data");
+        
+		AppDelegate *parent = [[UIApplication sharedApplication] delegate];
+        
+        //-----------------------------------------
+        // Only if we have launch data
+        //-----------------------------------------
+        if( parent.launchNotifData != nil ){
+        
+            NSError* error;
+            NSDictionary *launchData = [NSJSONSerialization JSONObjectWithData:parent.launchNotifData options:kNilOptions error:&error];
 
-		//-----------------------------------------
-		// Return notification data from delegate
-		//-----------------------------------------
-		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myDelegate.launchNotifData];
-		[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-
+            //-----------------------------------------
+            // Return notification data from delegate
+            //-----------------------------------------
+            CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:launchData];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        }
 	}];
 }
 
@@ -99,6 +113,8 @@
 	[self.commandDelegate runInBackground:^{
 
 		NSArray* arguments = command.arguments;
+        
+        NSLog(@"[ParsePush] Subscribing to channel: %@", [arguments objectAtIndex:0]);
 
 		//-----------------------------------------
 		// Add channel to the subsribtions
@@ -126,6 +142,8 @@
 	[self.commandDelegate runInBackground:^{
 
 		NSArray* arguments = command.arguments;
+        
+        NSLog(@"[ParsePush] Unsubscribing from channel: %@", [arguments objectAtIndex:0]);
 
 		//-----------------------------------------
 		// Remove the channel from subscriptions
@@ -156,6 +174,8 @@
 		// Get subscribed channels
 		//-----------------------------------------
 		NSArray *subscribedChannels = [PFInstallation currentInstallation].channels;
+        
+        NSLog(@"[ParsePush] Getting subscribed channels: %@", subscribedChannels);
 
 		//-----------------------------------------
 		// Return
@@ -173,23 +193,30 @@
  * @param  {CDVInvokedUrlCommand*}  command
  */
 - (void)deductFromActiveNotificationsBadge:(CDVInvokedUrlCommand*)command{
-
+    
 	[self.commandDelegate runInBackground:^{
-
+        
 		NSArray* arguments = command.arguments;
 		PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-
+        
+        NSLog(@"[ParsePush] Deducting %ld from notification badge", (long)[[arguments objectAtIndex:0] integerValue]);
+        
 		//-----------------------------------------
 		// Calculate new badge value
 		//-----------------------------------------
 		NSInteger newBadge = currentInstallation.badge - [[arguments objectAtIndex:0] integerValue];
-
+        
 		//-----------------------------------------
 		// Set as badge and return
 		//-----------------------------------------
 		currentInstallation.badge = newBadge;
 		[currentInstallation saveEventually];
-
+        
+		//-----------------------------------------
+		// Return
+		//-----------------------------------------
+		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:true];
+		[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 	}];
 }
 
